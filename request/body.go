@@ -1,6 +1,7 @@
 package request
 
 import (
+	"fmt"
 	"encoding/json"
 	"encoding/xml"
 	"io/ioutil"
@@ -11,6 +12,11 @@ import (
 // Body is wrapper struct for goreq.Body
 type Body struct {
 	*goreq.Body
+}
+
+func (b *Body) DebugPrint() {
+	s, _ := b.ToString()
+	fmt.Println(s)
 }
 
 // ToByte converts request body to []byte
