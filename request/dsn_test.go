@@ -77,7 +77,6 @@ func TestGET(t *testing.T) {
 	assert.False(resp["error"].(bool))
 }
 
-
 func TestPOST(t *testing.T) {
 	assert := assert.New(t)
 	ts := httptest.NewServer(http.HandlerFunc(handler))

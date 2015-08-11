@@ -1,9 +1,9 @@
 package request
 
 import (
-	"fmt"
 	"encoding/json"
 	"encoding/xml"
+	"fmt"
 	"io/ioutil"
 
 	"github.com/franela/goreq"

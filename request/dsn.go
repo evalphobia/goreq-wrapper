@@ -19,13 +19,13 @@ type DSN struct {
 	Params interface{}
 }
 
-func (d DSN) BasicAuth(user, pass string) DSN {
+func (d *DSN) BasicAuth(user, pass string) *DSN {
 	d.Request.BasicAuthUsername = user
 	d.Request.BasicAuthPassword = pass
 	return d
 }
 
-func (d DSN) Param(p interface{}) DSN {
+func (d *DSN) Param(p interface{}) *DSN {
 	d.Params = p
 	return d
 }
@@ -80,7 +80,7 @@ func prepareParams(d *DSN) {
 		d.Request.Body = d.Params
 		if _, ok := d.Params.(string); ok {
 			d.Request.ContentType = "application/x-www-form-urlencoded"
-		}else {
+		} else {
 			d.Request.ContentType = "application/json"
 		}
 	}
