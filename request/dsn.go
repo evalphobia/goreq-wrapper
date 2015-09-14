@@ -1,13 +1,21 @@
 package request
 
 import (
+	"time"
+
 	"github.com/franela/goreq"
 )
 
 var isDebug = false
 
+var timeout = 5 * time.Second
+
 func SetDebug() {
 	isDebug = true
+}
+
+func SetTimeout(d time.Duration) {
+	timeout = d
 }
 
 // DSN has request data
@@ -91,6 +99,7 @@ func (d DSN) call() (*Body, error) {
 		d.Request.ShowDebug = true
 	}
 	d.Request.Uri = d.Uri
+	d.Request.Timeout = timeout
 	res, err := d.Request.Do()
 	if res == nil {
 		return nil, err
