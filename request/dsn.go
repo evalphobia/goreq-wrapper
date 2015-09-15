@@ -8,7 +8,7 @@ import (
 
 var isDebug = false
 
-var timeout = 5 * time.Second
+var timeout = 10 * time.Second
 
 func SetDebug() {
 	isDebug = true
