@@ -22,9 +22,10 @@ func SetTimeout(d time.Duration) {
 type DSN struct {
 	goreq.Request
 
-	Method string
-	Uri    string
-	Params interface{}
+	Method  string
+	Uri     string
+	Timeout time.Duration
+	Params  interface{}
 }
 
 func (d *DSN) BasicAuth(user, pass string) *DSN {
@@ -98,8 +99,15 @@ func (d DSN) call() (*Body, error) {
 	if isDebug {
 		d.Request.ShowDebug = true
 	}
+
 	d.Request.Uri = d.Uri
-	d.Request.Timeout = timeout
+	switch {
+	case d.Timeout.Nanoseconds() > 0:
+		d.Request.Timeout = d.Timeout
+	default:
+		d.Request.Timeout = timeout
+	}
+
 	res, err := d.Request.Do()
 	if res == nil {
 		return nil, err
