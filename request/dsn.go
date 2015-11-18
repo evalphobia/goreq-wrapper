@@ -1,6 +1,7 @@
 package request
 
 import (
+	"errors"
 	"time"
 
 	"github.com/franela/goreq"
@@ -109,8 +110,14 @@ func (d DSN) call() (*Body, error) {
 	}
 
 	res, err := d.Request.Do()
-	if res == nil {
+	switch {
+	case res == nil:
 		return nil, err
+	case err != nil:
+		return &Body{res.Body}, err
+	case res.Response.StatusCode >= 400:
+		return &Body{res.Body}, errors.New(res.Response.Status)
 	}
-	return &Body{res.Body}, err
+
+	return &Body{res.Body}, nil
 }
